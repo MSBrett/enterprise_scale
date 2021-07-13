@@ -20,6 +20,6 @@ module "enterprise_scale" {
     ]
   }
  
-  configure_management_resources = "${var.configure_management_resources}"
+  configure_management_resources = local.configure_management_resources
 
 }
