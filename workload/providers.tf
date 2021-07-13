@@ -32,29 +32,29 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id  = "1f5f58f7-720c-4415-8107-78676ebfed76"
+  subscription_id  = "00000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
   alias = "management"
-  subscription_id  = "1f5f58f7-720c-4415-8107-78676ebfed76"
+  subscription_id  = "00000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
   alias = "identity"
-  subscription_id  = "8a0c94ac-a4c3-4f80-9a2f-22ed50121311"
+  subscription_id  = "00000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
   alias = "connectivity"
-  subscription_id  = "919c6905-c73b-40c1-bb1f-8d5c5e92d49e"
+  subscription_id  = "00000000-0000-0000-0000-000000000000"
 }
 
 provider "azurerm" {
   features {}
   alias = "workload"
-  subscription_id  = "8acd127d-6946-4b0f-a453-4f4aed1c5bc2"
+  subscription_id  = "00000000-0000-0000-0000-000000000000"
 }
