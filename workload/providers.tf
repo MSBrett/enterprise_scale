@@ -32,29 +32,29 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id  = "00000000-0000-0000-0000-000000000000"
+  subscription_id  = "${var.subscription_id_management}"
 }
 
 provider "azurerm" {
   features {}
   alias = "management"
-  subscription_id  = "00000000-0000-0000-0000-000000000000"
+  subscription_id  = "${var.subscription_id_management}"
 }
 
 provider "azurerm" {
   features {}
   alias = "identity"
-  subscription_id  = "00000000-0000-0000-0000-000000000000"
+  subscription_id  = "${var.subscription_id_identity}"
 }
 
 provider "azurerm" {
   features {}
   alias = "connectivity"
-  subscription_id  = "00000000-0000-0000-0000-000000000000"
+  subscription_id  = "${var.subscription_id_connectivity}"
 }
 
 provider "azurerm" {
   features {}
   alias = "workload"
-  subscription_id  = "00000000-0000-0000-0000-000000000000"
+  subscription_id  = "${var.subscription_id_workload}"
 }
