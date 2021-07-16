@@ -34,7 +34,7 @@ resource "azurerm_route_table" "return_hop_firewall" {
 
 resource "azurerm_route" "return_hop_client" {
   provider                = azurerm.connectivity
-  name                    = "return-hop-client-vnet"
+  name                    = "return-hop-firewall"
   resource_group_name     = azurerm_resource_group.hub_rg.name
   route_table_name        = azurerm_route_table.return_hop_firewall.name
   address_prefix          = azurerm_virtual_network.client_vnet.address_space[0]
