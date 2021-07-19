@@ -1,24 +1,39 @@
-module "enterprise_scale_foundation" {
-  source                       = "./foundation"
-  root_id                      = var.root_id
-  root_name                    = var.root_name
-  subscription_id_workload     = var.subscription_id_workload
+data "azurerm_client_config" "current" {}
+
+module "enterprise_scale" {
+  source         = "./terraform-azurerm-caf-enterprise-scale"
+  
+  root_parent_id = data.azurerm_client_config.current.tenant_id
+  root_id        = var.root_id
+  root_name      = var.root_name
+  library_path   = "./lib"
+
+  default_location            = var.location
+  deploy_core_landing_zones   = true
+  deploy_management_resources = true
+  deploy_demo_landing_zones   = false
+
   subscription_id_management   = var.subscription_id_management
   subscription_id_identity     = var.subscription_id_identity
   subscription_id_connectivity = var.subscription_id_connectivity
-  location                     = var.location
-  eslz_tags                    = var.eslz_tags
-  email_security_contact       = var.email_security_contact
+
+  subscription_id_overrides = {
+    landing-zones = [
+      "${var.subscription_id_workload}"
+    ]
+  }
+
+  configure_management_resources = local.configure_management_resources
+
   providers = {
     azurerm            = azurerm.management
-    azurerm.management = azurerm.management
   }
 }
 
 module "hub_network" {
   source                       = "./hubnetwork"
   count                        = var.deploy_hub > 0 ? 1 : 0
-  depends_on                   = [ module.enterprise_scale_foundation ]
+  depends_on                   = [ module.enterprise_scale ]
   root_id                      = var.root_id
   root_name                    = var.root_name
   subscription_id_connectivity = var.subscription_id_connectivity
@@ -38,7 +53,7 @@ module "hub_network" {
 module "workload_workstation" {
   source                       = "./workload-wks"
   count                        = var.deploy_workload > 0 ? 1 : 0
-  depends_on                   = [ module.enterprise_scale_foundation, module.hub_network ]
+  depends_on                   = [ module.enterprise_scale, module.hub_network ]
   root_id                      = var.root_id
   root_name                    = var.root_name
   subscription_id_connectivity = var.subscription_id_connectivity
