@@ -25,6 +25,7 @@ resource "azurerm_windows_virtual_machine" "vm1" {
   size                = var.vm_size
   admin_username      = "${var.root_id}${var.admin_username_suffix}"
   admin_password      = var.admin_password
+  tags                = var.client_tags
 
   enable_automatic_updates = true
   license_type             = "Windows_Client"
