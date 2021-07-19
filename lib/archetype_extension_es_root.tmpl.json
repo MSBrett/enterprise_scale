@@ -1,6 +1,10 @@
 {
     "extend_es_root": {
-      "policy_assignments": [],
+      "policy_assignments": [
+        "Deploy-IAAS-Antimalware",
+        "Deploy-MSFT-Antimalware",
+        "Deploy-Qualsys-VA"
+      ],
       "policy_definitions": [
         "Deploy-MSFT-Antimalware",
         "Deploy-Qualsys-VA"
