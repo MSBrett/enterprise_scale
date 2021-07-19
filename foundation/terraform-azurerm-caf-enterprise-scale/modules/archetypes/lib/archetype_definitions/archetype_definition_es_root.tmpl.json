@@ -8,10 +8,7 @@
             "Deploy-Resource-Diag",
             "Deploy-VM-Monitoring",
             "Deploy-VMSS-Monitoring",
-            "Deploy-WS-Arc-Monitoring",
-            "Deploy-Qualsys-VA",
-            "Deploy-MSFT-Antimalware",
-            "Deploy-IAAS-Antimalware"
+            "Deploy-WS-Arc-Monitoring"
         ],
         "policy_definitions": [
             "Append-AppService-httpsonly",
@@ -153,9 +150,7 @@
             "Deploy-VNET-HubSpoke",
             "Deploy-vNet",
             "Deploy-vWAN",
-            "Deploy-Windows-DomainJoin",
-            "Deploy-Qualsys-VA",
-            "Deploy-MSFT-Antimalware"
+            "Deploy-Windows-DomainJoin"
         ],
         "policy_set_definitions": [
             "Deny-PublicEndpoints",
@@ -165,7 +160,9 @@
             "Enforce-Encryption-CMK",
             "Enforce-EncryptTransit"
         ],
-        "role_definitions": [],
+        "role_definitions": [
+            "Network-Subnet-Contributor"
+        ],
         "archetype_config": {
             "parameters": {},
             "access_control": {}

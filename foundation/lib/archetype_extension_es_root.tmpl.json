@@ -1,0 +1,15 @@
+{
+    "extend_es_root": {
+      "policy_assignments": [],
+      "policy_definitions": [
+        "Deploy-MSFT-Antimalware",
+        "Deploy-Qualsys-VA"
+      ],
+      "policy_set_definitions": [],
+      "role_definitions": [],
+      "archetype_config": {
+        "parameters": {},
+        "access_control": {}
+      }
+    }
+  }

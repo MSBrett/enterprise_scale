@@ -1,9 +1,10 @@
 module "enterprise_scale" {
-  source = "./terraform-azurerm-caf-enterprise-scale"
-
+  source         = "./terraform-azurerm-caf-enterprise-scale"
+  
   root_parent_id = data.azurerm_client_config.current.tenant_id
   root_id        = var.root_id
   root_name      = var.root_name
+  library_path   = "${path.root}/lib"
 
   default_location            = var.location
   deploy_core_landing_zones   = true

@@ -9,10 +9,16 @@ module "enterprise_scale_foundation" {
   location                     = var.location
   eslz_tags                    = var.eslz_tags
   email_security_contact       = var.email_security_contact
+  providers = {
+    azurerm            = azurerm.management
+    azurerm.management = azurerm.management
+  }
 }
 
 module "hub_network" {
   source                       = "./hubnetwork"
+  count                        = var.deploy_hub > 0 ? 1 : 0
+  depends_on                   = [ module.enterprise_scale_foundation ]
   root_id                      = var.root_id
   root_name                    = var.root_name
   subscription_id_connectivity = var.subscription_id_connectivity
@@ -23,20 +29,30 @@ module "hub_network" {
   onprem_address_space         = var.onprem_address_space
   dns_servers                  = var.dns_servers
   vpn_key                      = var.vpn_key
+  providers = {
+    azurerm              = azurerm.connectivity
+    azurerm.connectivity = azurerm.connectivity
+  }
 }
 
-
 module "workload_workstation" {
-  source  = "./workload-wks"
-  root_id = var.root_id
-  root_name = var.root_name
+  source                       = "./workload-wks"
+  count                        = var.deploy_workload > 0 ? 1 : 0
+  depends_on                   = [ module.enterprise_scale_foundation, module.hub_network ]
+  root_id                      = var.root_id
+  root_name                    = var.root_name
   subscription_id_connectivity = var.subscription_id_connectivity
-  subscription_id_workload = var.subscription_id_workload
-  location = var.location
-  client_tags = var.client_tags
-  subnetprefix = var.subnetprefix
-  vm_size = var.vm_size
-  vm_disk_sku = var.vm_disk_sku
-  admin_username_suffix = var.admin_username_suffix
-  admin_password = var.admin_password
+  subscription_id_workload     = var.subscription_id_workload
+  location                     = var.location
+  client_tags                  = var.client_tags
+  subnetprefix                 = var.subnetprefix
+  vm_size                      = var.vm_size
+  vm_disk_sku                  = var.vm_disk_sku
+  admin_username_suffix        = var.admin_username_suffix
+  admin_password               = var.admin_password
+  providers = {
+    azurerm              = azurerm.workload
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.workload     = azurerm.workload
+  }
 }

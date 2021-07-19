@@ -1,3 +1,10 @@
+variable "deploy_hub" {
+  default = 0
+}
+
+variable "deploy_workload" {
+  default = 0
+}
 variable "root_id" {
   type    = string
   default = "eslz"
