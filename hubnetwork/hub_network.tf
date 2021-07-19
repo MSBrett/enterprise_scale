@@ -67,10 +67,10 @@ resource "azurerm_firewall" "firewall" {
   sku_tier            = "Standard"
   threat_intel_mode   = "Deny"
   tags                = var.hub_tags
-  
-  dns_servers         = var.dns_servers
+
+  dns_servers = var.dns_servers
   # firewall_policy_id = azurerm_firewall_policy.default.id
-  
+
   ip_configuration {
     name                 = "ipconfig"
     subnet_id            = azurerm_subnet.firewall_subnet.id
@@ -93,7 +93,7 @@ resource "azurerm_virtual_network_gateway" "gateway" {
   sku           = "VpnGw1"
 
   bgp_settings {
-    asn = 65001
+    asn         = 65001
     peer_weight = 10
     peering_addresses {
       ip_configuration_name = "vnetGatewayConfig"
@@ -114,7 +114,7 @@ resource "azurerm_local_network_gateway" "onprem" {
   provider            = azurerm.connectivity
   resource_group_name = azurerm_resource_group.hub_rg.name
   location            = azurerm_resource_group.hub_rg.location
-  gateway_address     = "${var.onprem_gateway_ip}"
+  gateway_address     = var.onprem_gateway_ip
   address_space       = [var.onprem_address_space]
   tags                = var.hub_tags
 }
@@ -130,5 +130,5 @@ resource "azurerm_virtual_network_gateway_connection" "hub_to_onprem" {
   virtual_network_gateway_id = azurerm_virtual_network_gateway.gateway.id
   local_network_gateway_id   = azurerm_local_network_gateway.onprem.id
 
-  shared_key = "${var.vpn_key}"
+  shared_key = var.vpn_key
 }

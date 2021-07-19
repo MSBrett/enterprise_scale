@@ -8,7 +8,7 @@ terraform {
       version = ">= 2.46.0"
     }
     azurecaf = {
-      source = "aztfmod/azurecaf"
+      source  = "aztfmod/azurecaf"
       version = ">= 1.2.4"
     }
     random = {
@@ -32,5 +32,5 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id  = "${var.subscription_id_management}"
-  }
+  subscription_id = var.subscription_id_management
+}

@@ -12,10 +12,10 @@ resource "azurerm_virtual_network" "client_vnet" {
   address_space       = [cidrsubnet(var.subnetprefix, 3, 1)]
   location            = azurerm_resource_group.client_rg.location
   resource_group_name = azurerm_resource_group.client_rg.name
-  dns_servers         = [
-    azurerm_firewall.firewall.ip_configuration[0].private_ip_address
+  dns_servers = [
+    data.azurerm_firewall.firewall.ip_configuration[0].private_ip_address
   ]
-  tags                = var.client_tags
+  tags = var.client_tags
 }
 
 resource "azurerm_subnet" "client_subnet" {

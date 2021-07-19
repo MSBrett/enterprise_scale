@@ -5,7 +5,7 @@ resource "azurerm_network_interface" "vm1_nic1" {
   resource_group_name = azurerm_resource_group.client_rg.name
   location            = azurerm_resource_group.client_rg.location
   tags                = var.client_tags
-  
+
   ip_configuration {
     name                          = "primary"
     primary                       = true
@@ -17,7 +17,7 @@ resource "azurerm_network_interface" "vm1_nic1" {
 
 resource "azurerm_windows_virtual_machine" "vm1" {
   provider            = azurerm.workload
-  depends_on          = [ azurerm_network_interface.vm1_nic1 ]
+  depends_on          = [azurerm_network_interface.vm1_nic1]
   name                = "${var.root_id}-${var.location}-vm1"
   computer_name       = "${var.root_id}vm1"
   resource_group_name = azurerm_resource_group.client_rg.name
@@ -25,10 +25,10 @@ resource "azurerm_windows_virtual_machine" "vm1" {
   size                = var.vm_size
   admin_username      = "${var.root_id}${var.admin_username_suffix}"
   admin_password      = var.admin_password
-  
+
   enable_automatic_updates = true
-  license_type = "Windows_Client"
-  
+  license_type             = "Windows_Client"
+
   network_interface_ids = [
     azurerm_network_interface.vm1_nic1.id
   ]
@@ -46,7 +46,7 @@ resource "azurerm_windows_virtual_machine" "vm1" {
   }
 
   identity {
-    type      = "SystemAssigned"
+    type = "SystemAssigned"
   }
 }
 

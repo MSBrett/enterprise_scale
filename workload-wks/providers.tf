@@ -8,7 +8,7 @@ terraform {
       version = ">= 2.46.0"
     }
     azurecaf = {
-      source = "aztfmod/azurecaf"
+      source  = "aztfmod/azurecaf"
       version = ">= 1.2.4"
     }
     random = {
@@ -32,29 +32,17 @@ terraform {
 
 provider "azurerm" {
   features {}
-  subscription_id  = "${var.subscription_id_management}"
+  subscription_id = var.subscription_id_workload
 }
 
 provider "azurerm" {
   features {}
-  alias = "management"
-  subscription_id  = "${var.subscription_id_management}"
+  alias           = "connectivity"
+  subscription_id = var.subscription_id_connectivity
 }
 
 provider "azurerm" {
   features {}
-  alias = "identity"
-  subscription_id  = "${var.subscription_id_identity}"
-}
-
-provider "azurerm" {
-  features {}
-  alias = "connectivity"
-  subscription_id  = "${var.subscription_id_connectivity}"
-}
-
-provider "azurerm" {
-  features {}
-  alias = "workload"
-  subscription_id  = "${var.subscription_id_workload}"
+  alias           = "workload"
+  subscription_id = var.subscription_id_workload
 }
