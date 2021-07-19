@@ -1,0 +1,3 @@
+[submodule "foundation/terraform-azurerm-caf-enterprise-scale"]
+	path = foundation/terraform-azurerm-caf-enterprise-scale
+	url = https://github.com/Azure/terraform-azurerm-caf-enterprise-scale
