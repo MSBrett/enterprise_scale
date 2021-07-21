@@ -78,7 +78,7 @@ variable "subnetprefix" {
 
 variable "onprem_gateway_ip" {
   description = "The IP address/range to allow to connect to to the environment"
-  default     = "1.2.3.4"
+  default     = "168.63.129.16"
 }
 
 variable "onprem_address_space" {
