@@ -10,12 +10,6 @@ data "azurerm_resource_group" "hub_rg" {
   name     = "${var.root_id}-${var.location}-hub"
 }
 
-data "azurerm_route_table" "next_hop_firewall" {
-  provider            = azurerm.connectivity
-  name                = "${var.root_id}-${var.location}-next-hop-firewall"
-  resource_group_name = data.azurerm_resource_group.hub_rg.name
-}
-
 data "azurerm_route_table" "return_hop_firewall" {
   provider            = azurerm.connectivity
   name                = "${var.root_id}-${var.location}-return-hop-firewall"
