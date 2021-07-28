@@ -1,3 +1,6 @@
+variable "deploy_arc" {
+  default = 0
+}
 variable "deploy_hub" {
   default = 0
 }

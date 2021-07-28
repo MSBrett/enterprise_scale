@@ -72,3 +72,18 @@ module "workload_workstation" {
     azurerm.workload     = azurerm.workload
   }
 }
+
+module "workload_arc" {
+  source                       = "./workload-arc"
+  count                        = var.deploy_arc > 0 ? 1 : 0
+  depends_on                   = [ module.enterprise_scale, module.hub_network ]
+  root_id                      = var.root_id
+  root_name                    = var.root_name
+  subscription_id_workload     = var.subscription_id_workload
+  location                     = var.location
+  client_tags                  = var.client_tags
+  providers = {
+    azurerm              = azurerm.workload
+    azurerm.workload     = azurerm.workload
+  }
+}
