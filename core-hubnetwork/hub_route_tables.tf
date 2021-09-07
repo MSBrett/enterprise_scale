@@ -9,6 +9,7 @@ resource "azurerm_route_table" "return_hop_firewall" {
 
 resource "azurerm_subnet_route_table_association" "gateway_subnet" {
   provider       = azurerm.connectivity
+  depends_on     = [ azurerm_virtual_network_gateway.gateway, azurerm_firewall.firewall ]
   subnet_id      = azurerm_subnet.gateway_subnet.id
   route_table_id = azurerm_route_table.return_hop_firewall.id
 }

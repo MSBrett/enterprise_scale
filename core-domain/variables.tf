@@ -8,11 +8,7 @@ variable "root_name" {
   default = "ESLZ"
 }
 
-variable "subscription_id_workload" {
-  default = "00000000-0000-0000-0000-000000000000"
-}
-
-variable "subscription_id_connectivity" {
+variable "subscription_id_identity" {
   default = "00000000-0000-0000-0000-000000000000"
 }
 
@@ -21,7 +17,7 @@ variable "location" {
   default     = "westus"
 }
 
-variable "client_tags" {
+variable "domain_tags" {
   type = map(any)
   default = {
     Environment = "eslz"
@@ -46,10 +42,19 @@ variable "vm_disk_sku" {
   default     = "Premium_LRS"
 }
 
-variable "admin_username_suffix" {
-  default = "eslzadmin"
+variable "admin_username" {
+  sensitive = true
 }
 
 variable "admin_password" {
   sensitive = true
 }
+
+variable "active_directory_domain" {
+  default = "eslz.com"
+}
+
+variable "active_directory_netbios_name" {
+  default = "ESLZ"
+}
+

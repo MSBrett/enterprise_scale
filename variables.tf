@@ -5,15 +5,35 @@ variable "deploy_hub" {
   default = 0
 }
 
+variable "deploy_domain" {
+  default = 0
+}
+
 variable "deploy_workload" {
   default = 0
 }
+
+variable "scaleset_instance_count" {
+  default = 0
+}
+
+
 variable "root_id" {
   type    = string
   default = "eslz"
 }
 
 variable "root_name" {
+  type    = string
+  default = "ESLZ"
+}
+
+variable "active_directory_domain" {
+  type    = string
+  default = "eslz.com"
+}
+
+variable "active_directory_netbios_name" {
   type    = string
   default = "ESLZ"
 }
@@ -44,17 +64,27 @@ variable "hub_tags" {
   type = map(any)
   default = {
     Environment = "eslz"
-    Group       = "eslz"
+    Group       = "NetOps"
     Owner       = "nobody@acme.com"
     Project     = "eslz"
   }
 }
 
-variable "client_tags" {
+variable "domain_tags" {
   type = map(any)
   default = {
     Environment = "eslz"
-    Group       = "eslz"
+    Group       = "SecOps"
+    Owner       = "nobody@acme.com"
+    Project     = "eslz"
+  }
+}
+
+variable "workload_tags" {
+  type = map(any)
+  default = {
+    Environment = "eslz"
+    Group       = "EntOps"
     Owner       = "nobody@acme.com"
     Project     = "eslz"
   }
@@ -64,7 +94,7 @@ variable "eslz_tags" {
   type = map(any)
   default = {
     Environment = "eslz"
-    Group       = "eslz"
+    Group       = "SecOps"
     Owner       = "nobody@acme.com"
     Project     = "eslz"
   }
@@ -95,7 +125,7 @@ variable "dns_servers" {
 
 variable "vm_size" {
   description = "The VM SKU to use"
-  default     = "Standard_F4s_v2"
+  default     = "Standard_D2s_v3"
 }
 
 variable "vm_disk_sku" {
@@ -103,7 +133,7 @@ variable "vm_disk_sku" {
   default     = "Premium_LRS"
 }
 
-variable "admin_username_suffix" {
+variable "admin_username" {
   default = "eslzadmin"
 }
 

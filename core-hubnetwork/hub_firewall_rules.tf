@@ -7,14 +7,18 @@ resource "azurerm_firewall_network_rule_collection" "network_allow" {
   action              = "Allow"
 
   rule {
-    name = "allow_onprem_rdp"
+    name = "allow_tcp"
 
     source_addresses = [
       var.onprem_address_space,
+      var.subnetprefix
     ]
 
     destination_ports = [
+      "22",
+      "53",
       "3389",
+      "6516"
     ]
 
     destination_addresses = [
@@ -23,15 +27,37 @@ resource "azurerm_firewall_network_rule_collection" "network_allow" {
 
     protocols = [
       "TCP",
+    ]
+  }
+
+  rule {
+    name = "allow_udp"
+
+    source_addresses = [
+      var.onprem_address_space,
+      var.subnetprefix
+    ]
+
+    destination_ports = [
+      "53",
+      "3389",
+    ]
+
+    destination_addresses = [
+      var.subnetprefix,
+    ]
+
+    protocols = [
       "UDP"
     ]
   }
 
   rule {
-    name = "allow_onprem_icmp"
+    name = "allow_icmp"
 
     source_addresses = [
       var.onprem_address_space,
+      var.subnetprefix
     ]
 
     destination_ports = [
@@ -88,6 +114,27 @@ resource "azurerm_firewall_network_rule_collection" "network_allow" {
       "TCP"
     ]
   }
+
+  rule {
+    name = "allow_internal"
+
+    source_addresses = [
+      var.subnetprefix
+    ]
+
+    destination_ports = [
+      "*",
+    ]
+
+    destination_addresses = [
+      var.subnetprefix,
+    ]
+
+    protocols = [
+      "Any"
+    ]
+  }
+
 }
 
 resource "azurerm_firewall_application_rule_collection" "application_deny" {

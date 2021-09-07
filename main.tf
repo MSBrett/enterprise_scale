@@ -32,7 +32,7 @@ module "enterprise_scale" {
 }
 
 module "hub_network" {
-  source                       = "./hubnetwork"
+  source                       = "./core-hubnetwork"
   count                        = var.deploy_hub > 0 ? 1 : 0
   depends_on                   = [ module.enterprise_scale ]
   root_id                      = var.root_id
@@ -51,8 +51,31 @@ module "hub_network" {
   }
 }
 
-module "workload_workstation" {
-  source                       = "./workload-wks"
+module "windows_domain" {
+  source                       = "./core-domain"
+  count                        = var.deploy_domain > 0 ? 1 : 0
+  depends_on                   = [ module.enterprise_scale, module.hub_network ]
+  root_id                      = var.root_id
+  root_name                    = var.root_name
+  subscription_id_identity     = var.subscription_id_identity
+  location                     = var.location
+  domain_tags                  = var.domain_tags
+  subnetprefix                 = var.subnetprefix
+  vm_size                      = var.vm_size
+  vm_disk_sku                  = var.vm_disk_sku
+  admin_username               = var.admin_username
+  admin_password               = var.admin_password
+  active_directory_domain       = var.active_directory_domain
+  active_directory_netbios_name = var.active_directory_netbios_name
+  providers = {
+    azurerm              = azurerm.identity
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.identity     = azurerm.identity
+  }
+}
+
+module "workload_vm" {
+  source                       = "./workload-vm"
   count                        = var.deploy_workload > 0 ? 1 : 0
   depends_on                   = [ module.enterprise_scale, module.hub_network ]
   root_id                      = var.root_id
@@ -60,15 +83,18 @@ module "workload_workstation" {
   subscription_id_connectivity = var.subscription_id_connectivity
   subscription_id_workload     = var.subscription_id_workload
   location                     = var.location
-  client_tags                  = var.client_tags
+  workload_tags                  = var.workload_tags
   subnetprefix                 = var.subnetprefix
   vm_size                      = var.vm_size
   vm_disk_sku                  = var.vm_disk_sku
-  admin_username_suffix        = var.admin_username_suffix
+  admin_username               = var.admin_username
   admin_password               = var.admin_password
+  active_directory_domain       = var.active_directory_domain
+  scaleset_instance_count      = var.scaleset_instance_count
   providers = {
     azurerm              = azurerm.workload
     azurerm.connectivity = azurerm.connectivity
+    azurerm.identity     = azurerm.identity
     azurerm.workload     = azurerm.workload
   }
 }
@@ -81,7 +107,7 @@ module "workload_arc" {
   root_name                    = var.root_name
   subscription_id_workload     = var.subscription_id_workload
   location                     = var.location
-  client_tags                  = var.client_tags
+  workload_tags                  = var.workload_tags
   providers = {
     azurerm              = azurerm.workload
     azurerm.workload     = azurerm.workload

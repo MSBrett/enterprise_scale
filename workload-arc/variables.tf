@@ -17,7 +17,7 @@ variable "location" {
   default     = "westus"
 }
 
-variable "client_tags" {
+variable "workload_tags" {
   type = map(any)
   default = {
     Environment = "eslz"
